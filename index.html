@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>لعبة السناافي 🇦🇪 - عواصم الخليج</title>
+  <style>
+    body { font-family: 'Arial', sans-serif; background: #f0f0f0; text-align: center; padding: 50px; direction: rtl; }
+    h1 { color: #00704A; font-size: 32px; }
+    .question { font-size: 24px; margin: 20px 0; }
+    .btn { background-color: #00704A; color: white; padding: 10px 20px; margin: 5px; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; }
+    .btn:hover { background-color: #005e3d; }
+  </style>
+</head>
+<body>
+  <h1>لعبة السناافي 🇦🇪</h1>
+  <p class="question" id="question">اضغط على "ابدأ" لاختيار سؤال!</p>
+  <div id="answers"></div>
+  <button class="btn" onclick="startGame()">ابدأ</button>
+
+  <script>
+    const questions = [
+      { q: "ما هي عاصمة الإمارات؟", a: ["دبي", "أبوظبي", "الشارقة"], c: 1 },
+      { q: "ما هي عاصمة السعودية؟", a: ["جدة", "الرياض", "الدمام"], c: 1 },
+      { q: "ما هي عاصمة الكويت؟", a: ["الكويت", "حولي", "السالمية"], c: 0 },
+      { q: "ما هي عاصمة البحرين؟", a: ["الرفاع", "المنامة", "المحرق"], c: 1 },
+      { q: "ما هي عاصمة قطر؟", a: ["الدوحة", "الوكرة", "الريان"], c: 0 },
+      { q: "ما هي عاصمة عمان؟", a: ["نزوى", "صحار", "مسقط"], c: 2 }
+    ];
+
+    function startGame() {
+      const random = questions[Math.floor(Math.random() * questions.length)];
+      document.getElementById("question").textContent = random.q;
+
+      const answersDiv = document.getElementById("answers");
+      answersDiv.innerHTML = "";
+      random.a.forEach((ans, idx) => {
+        const btn = document.createElement("button");
+        btn.textContent = ans;
+        btn.className = "btn";
+        btn.onclick = () => {
+          if (idx === random.c) {
+            alert("إجابة صحيحة! أحسنت يا السناافي!");
+          } else {
+            alert("إجابة خاطئة! حاول مرة أخرى.");
+          }
+        };
+        answersDiv.appendChild(btn);
+      });
+    }
+  </script>
+</body>
+</html>
