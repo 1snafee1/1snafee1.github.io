@@ -1,52 +1,76 @@
-
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لعبة السناافي 🇦🇪 - عواصم الخليج</title>
+  <title>هدايا السنافي</title>
   <style>
-    body { font-family: 'Arial', sans-serif; background: #f0f0f0; text-align: center; padding: 50px; direction: rtl; }
-    h1 { color: #00704A; font-size: 32px; }
-    .question { font-size: 24px; margin: 20px 0; }
-    .btn { background-color: #00704A; color: white; padding: 10px 20px; margin: 5px; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; }
-    .btn:hover { background-color: #005e3d; }
+    body {
+      background: black;
+      color: gold;
+      font-family: 'Tahoma', sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 60px);
+      justify-content: center;
+      gap: 15px;
+    }
+    .gift {
+      width: 60px;
+      height: 60px;
+      background-image: url('https://i.imgur.com/b8V5h7s.png');
+      background-size: cover;
+      cursor: pointer;
+    }
+    .opened {
+      background-image: none;
+      background-color: white;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    .logo {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      opacity: 0.4;
+      width: 60px;
+    }
   </style>
 </head>
 <body>
-  <h1>لعبة السناافي 🇦🇪</h1>
-  <p class="question" id="question">اضغط على "ابدأ" لاختيار سؤال!</p>
-  <div id="answers"></div>
-  <button class="btn" onclick="startGame()">ابدأ</button>
+  <h1>هدايا السنافي - اختر هدية</h1>
+  <div class="grid" id="giftGrid"></div>
+  <img src="https://i.imgur.com/GZXZk6D.png" class="logo">
 
   <script>
-    const questions = [
-      { q: "ما هي عاصمة الإمارات؟", a: ["دبي", "أبوظبي", "الشارقة"], c: 1 },
-      { q: "ما هي عاصمة السعودية؟", a: ["جدة", "الرياض", "الدمام"], c: 1 },
-      { q: "ما هي عاصمة الكويت؟", a: ["الكويت", "حولي", "السالمية"], c: 0 },
-      { q: "ما هي عاصمة البحرين؟", a: ["الرفاع", "المنامة", "المحرق"], c: 1 },
-      { q: "ما هي عاصمة قطر؟", a: ["الدوحة", "الوكرة", "الريان"], c: 0 },
-      { q: "ما هي عاصمة عمان؟", a: ["نزوى", "صحار", "مسقط"], c: 2 }
-    ];
+    const grid = document.getElementById('giftGrid');
+    const prizes = ['50', '70', '100', '0', '0', '0', '80', '60', '150', '30'];
 
-    function startGame() {
-      const random = questions[Math.floor(Math.random() * questions.length)];
-      document.getElementById("question").textContent = random.q;
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
 
-      const answersDiv = document.getElementById("answers");
-      answersDiv.innerHTML = "";
-      random.a.forEach((ans, idx) => {
-        const btn = document.createElement("button");
-        btn.textContent = ans;
-        btn.className = "btn";
-        btn.onclick = () => {
-          if (idx === random.c) {
-            alert("إجابة صحيحة! أحسنت يا السناافي!");
-          } else {
-            alert("إجابة خاطئة! حاول مرة أخرى.");
-          }
-        };
-        answersDiv.appendChild(btn);
-      });
+    const shuffled = shuffle([...prizes]);
+
+    for (let i = 0; i < 10; i++) {
+      const div = document.createElement('div');
+      div.className = 'gift';
+      div.onclick = function () {
+        if (!div.classList.contains('opened')) {
+          div.classList.add('opened');
+          div.textContent = shuffled[i] + ' درهم';
+        }
+      };
+      grid.appendChild(div);
     }
   </script>
 </body>
